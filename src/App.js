@@ -2,38 +2,85 @@ import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
+  const isSuccess = true;
+  const fetchUsers = async () => {
+    const baseUrl = "https://jsonplaceholder.typicode.com";
+    const userIds = [1, 2, 3];
+
+    // 1. Створюємо масив промісів
+    const arrayOfPromises = userIds.map(async (userId) => {
+      const response = await fetch(`${baseUrl}/users/${userId}`);
+      return response.json();
+    });
+
+    // 2. Запускаємо усі проміси паралельно і чекаємо на їх завершення
+    const users = await Promise.all(arrayOfPromises);
+    console.log(users);
+  };
+
+  fetchUsers();
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (isSuccess) {
+        resolve("Success! Value passed to resolve function");
+      } else {
+        reject("Error! Error passed to reject function");
+      }
+    }, 2000);
+  });
+
+  // Will run first
+  console.log("Before promise.then()");
+
+  // Registering promise callbacks
+  promise.then(
+    // onResolve will run third or not at all
+    (value) => {
+      console.log("onResolve call inside promise.then()");
+      console.log("value", value); // "Success! Value passed to resolve function"
+    },
+    // onReject will run third or not at all
+    (error) => {
+      console.log("onReject call inside promise.then()");
+      console.log(error); // "Error! Error passed to reject function"
+    }
+  );
+
+  // Will run second
+  console.log("After promise.then()");
   f.call(null);
 
-function f() {
-  alert(this);
-}
-console.log(new Array.prototype.constructor(1, 2));
-console.log(new Array(1, 2));
-console.log(Array(1, 2))
-console.log([1, 2])
-
-let name = "Вася";
-function sayHi() {
-  alert(name);
-}
-
-setTimeout(function() {
-  let name = "Петя";
-  sayHi();
-}, 1000);
-
-let a = new Array(1,2), b = new Array(3);
-alert(a[0] + b[0]);
-console.log("a", [] + 1 + 2);
-console.log("b", b);
-
-let user = {
-  sayHi: function() {
+  function f() {
     alert(this);
   }
-};
+  console.log(new Array.prototype.constructor(1, 2));
+  console.log(new Array(1, 2));
+  console.log(Array(1, 2));
+  console.log([1, 2]);
 
-(user.sayBye = user.sayHi)();
+  let name = "Вася";
+  function sayHi() {
+    alert(name);
+  }
+
+  setTimeout(function () {
+    let name = "Петя";
+    sayHi();
+  }, 1000);
+
+  let a = new Array(1, 2),
+    b = new Array(3);
+  alert(a[0] + b[0]);
+  console.log("a", [] + 1 + 2);
+  console.log("b", b);
+
+  let user = {
+    sayHi: function () {
+      alert(this);
+    },
+  };
+
+  (user.sayBye = user.sayHi)();
 
   const hotel = {
     username: "Resort hotel",
