@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 import "./App.css";
 
 function App() {
@@ -10,27 +10,21 @@ function App() {
   const BASE_URL = "https://flag-gilt.vercel.app/api/challenge/";
 
   useEffect(() => {
-    async function fetchData() {
-      const axiosInstance = axios.create({
-        baseURL: BASE_URL,
-        Method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
-          Authorization: `Bearer ${TOKEN}`,
-        },
-        body: {
-          cursor,
-        },
-      });
-      return await axiosInstance.get();
-    }
-
     async function postData() {
       setIsLoading(true);
       try {
-        const { data } = await fetchData();
+        const { data } = await fetch(BASE_URL, {
+          method: "post",
+          headers: new Headers({
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+            Authorization: `Bearer ${TOKEN}`,
+          }),
+          body: {
+            cursor,
+          },
+        });
         if (!data) {
           return Error(alert("Whoops, something went wrong"));
         }
