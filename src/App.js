@@ -14,16 +14,18 @@ function App() {
       setIsLoading(true);
       try {
         const { data } = await fetch(BASE_URL, {
-          method: "post",
-          headers: new Headers({
+          method: "POST",
+          headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+            "Access-Control-Allow-Headers":
+              "Content-Type, X-Auth-Token, Origin",
             Authorization: `Bearer ${TOKEN}`,
-          }),
-          body: {
-            cursor,
           },
+          body: JSON.stringify({
+            cursor,
+          }),
         });
         if (!data) {
           return Error(alert("Whoops, something went wrong"));
