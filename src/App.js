@@ -13,17 +13,18 @@ function App() {
     async function fetchData() {
       const axiosInstance = axios.create({
         baseURL: BASE_URL,
+        Method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
-          // "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
+          "Access-Control-Allow-Methods": "GET,POST,PUT,PATCH,DELETE,OPTIONS",
           Authorization: `Bearer ${TOKEN}`,
         },
         body: {
           cursor,
         },
       });
-      return await axiosInstance.post();
+      return await axiosInstance.get();
     }
 
     async function postData() {
