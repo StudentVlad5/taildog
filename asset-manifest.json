@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/taildog/static/css/main.f855e6bc.css",
-    "main.js": "/taildog/static/js/main.870b1467.js",
+    "main.js": "/taildog/static/js/main.92eb160a.js",
     "static/js/453.fc23724c.chunk.js": "/taildog/static/js/453.fc23724c.chunk.js",
     "index.html": "/taildog/index.html",
     "main.f855e6bc.css.map": "/taildog/static/css/main.f855e6bc.css.map",
-    "main.870b1467.js.map": "/taildog/static/js/main.870b1467.js.map",
+    "main.92eb160a.js.map": "/taildog/static/js/main.92eb160a.js.map",
     "453.fc23724c.chunk.js.map": "/taildog/static/js/453.fc23724c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.870b1467.js"
+    "static/js/main.92eb160a.js"
   ]
 }
