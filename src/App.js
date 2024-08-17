@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
+  const [cursor, setCursor] = useState("");
   const [listOfCursors, setListOfCursors] = useState([]);
-  const [cursor, setCursor] = useState("4e76cffe");
+  const [flag, setFlag] = useState("");
   const [loading, setIsLoading] = useState(false);
   const TOKEN = "uM0M7uypyeeHZ741XIrs9KsFOUEhxUdtXJA=";
   const BASE_URL = "https://flag-gilt.vercel.app/api/challenge/";
@@ -13,7 +14,7 @@ function App() {
     async function postData() {
       setIsLoading(true);
       try {
-        const { data } = await fetch(BASE_URL, {
+        await fetch(BASE_URL, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -26,32 +27,41 @@ function App() {
           body: JSON.stringify({
             cursor,
           }),
-        });
-        if (!data) {
-          return Error(alert("Whoops, something went wrong"));
-        }
-        setListOfCursors(listOfCursors.push(data));
-        if (data?.nextCursor) {
-          setCursor(data?.nextCursor);
-        }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            if (data.nextCursor) {
+              setListOfCursors((prev) => [...prev, data?.nextCursor]);
+              setCursor(data?.nextCursor);
+            }
+            if (data.flag) {
+              setFlag(data.flag);
+            }
+          })
+          .catch((error) => console.log(error));
       } catch (error) {
         Error(error.message);
       } finally {
         setIsLoading(false);
       }
     }
-    if (cursor && cursor.length === 8) {
+    if (!flag) {
       postData();
     }
-  }, [cursor, listOfCursors]);
+  }, [cursor, flag, listOfCursors]);
+
+  console.log("listOfCursors", listOfCursors);
 
   return (
-    <div className="App">
-      <header className="App-header"></header>
+    <div className="App" style={{ fontSize: "20px" }}>
       {loading && <h1>loading</h1>}
-      {listOfCursors.forEach((it, ind) => (
-        <div key={ind}>{it}</div>
-      ))}
+      <ul style={{ listStyle: "none" }}>
+        {listOfCursors.map((it) => (
+          <li key={it}>Cursor: {it}</li>
+        ))}
+      </ul>
+      <div>Flag : {flag}</div>
     </div>
   );
 }
