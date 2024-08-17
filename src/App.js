@@ -30,7 +30,6 @@ function App() {
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             if (data.nextCursor) {
               setListOfCursors((prev) => [...prev, data?.nextCursor]);
               setCursor(data?.nextCursor);
@@ -50,8 +49,6 @@ function App() {
       postData();
     }
   }, [cursor, flag, listOfCursors]);
-
-  console.log("listOfCursors", listOfCursors);
 
   return (
     <div className="App" style={{ fontSize: "20px" }}>
